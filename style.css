@@ -1,0 +1,359 @@
+body {
+    font-family: sans;
+}
+
+footer {
+  width: 100%;
+  font-size: 9pt;
+  color: gray;
+  text-align: center;
+  position: absolute;
+  bottom: 12px;
+  z-index: -1;
+}
+
+footer > a {
+    color: gray;
+    text-decoration: underline;
+}
+
+.pull-right {
+    float: right;
+}
+
+.align-right {
+    text-align: right;
+}
+
+.hidden {
+    display: none;
+}
+
+.disabled
+{
+    opacity: 0.3;
+}
+
+.tree.disabled::after
+{
+    content: "Not used by this algorithm.";
+    display: block;
+    text-align: center;
+}
+
+.highlighted
+{
+    background-color: #ADD8E6;
+}
+
+.blurry-text {
+    text-shadow: 0 0 6px black;
+    color: transparent;
+}
+
+.small-text
+{
+    font-size: 9pt;
+}
+
+.tiny-text
+{
+    font-size: 5pt;
+}
+
+.input-small
+{
+    width: 54px;
+}
+
+@keyframes pulse-green {
+    0% {
+        background-color: #90EE90;
+    }
+    50% {
+        background-color: #c3eec3;
+    }
+    100% {
+        background-color: white;
+    }
+}
+
+@keyframes pulse-red {
+    0% {
+        background-color: #F08080;
+    }
+    50% {
+        background-color: #f0c0c0;
+    }
+    100% {
+        background-color: white;
+    }
+}
+
+@keyframes pulse-both {
+    0% {
+        background: #F08080;
+        box-shadow: inset 0px 8px 0px 0px rgba(144,238,144,1);
+    }
+    100% {
+        box-shadow: inset 0px 8px 0px 0px rgba(144,238,144,0);
+        background: white;
+    }
+}
+
+.flex-container {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    
+}
+
+.vertical-container {
+    flex-direction: column;
+}
+
+.horizontal-container
+{
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.panel {
+    background: white;
+    padding: 5px;
+    margin-top: 10px;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, .05);
+    border: 1px solid transparent;
+    border-radius: 2px;
+    border-color: #e3e3e3;
+    list-style: none;
+}
+
+.panel>* {
+    margin: 2px;
+}
+
+.read {
+    animation: pulse-green 0.25s normal;
+}
+
+.written {
+    animation: pulse-red 0.25s normal;
+}
+
+.read.written {
+    animation: pulse-both 0.25s normal;
+}
+
+#main-container
+{
+  height: 100%;
+}
+
+#tree {
+    width: 800px;
+    min-height: 600px;
+    overflow: scroll;
+}
+
+#editor {
+    width: 650px;
+    min-height: 580px;
+}
+
+#algorithm-selector {
+    margin-bottom: 4px;
+}
+
+#run-button {
+    min-width: 70px;
+}
+
+#memory-panel>*:not(:first-child) {
+    margin-top: 20px;
+}
+
+#memory
+{
+  width: 252px;
+  min-height: 128px;
+  margin-top: 15px !important;
+}
+
+.bucket {
+    min-width: 42px;
+    min-height: 19.333px;
+    border: 1px dashed black;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: left;
+    align-content: flex-start;
+}
+
+.bucket >* {
+    border: 1px solid gray;
+    text-align: center;
+    height: 19.333px;
+    line-height: 19.333px;
+}
+
+.bucket > .data {
+    width: 26px;
+}
+
+.bucket > .tag {
+    width: 12px;
+    font-size: 5pt;
+}
+
+.tree .bucket {
+    width: 42px;
+    display: inline-flex;
+}
+
+#speed-slider {
+    margin-bottom: -5px;
+}
+
+#speed-slider-container {
+    margin-top: 5px;
+}
+
+#simulation-panel {
+    margin: 24px;
+    padding: 6px;
+    z-index: 999;
+}
+
+#statistics {
+    margin-top: 20px;
+}
+
+#statistics>* {
+    font-size: 6pt;
+    color: gray;
+}
+
+#statistics>table {
+    width: 100%
+}
+
+#statistics>table,
+#statistics>table>tbody>tr>th,
+#statistics>table>tbody>tr>td {
+    border: 0px;
+}
+
+#statistics-total {
+    border-top: 1px solid gray !important;
+}
+
+#memory-size
+{
+    margin-top: 0px !important;
+}
+
+
+/* Pure CSS tree based on https://codepen.io/philippkuehn/pen/QbrOaN*/
+
+.tree ul {
+    position: relative;
+    padding: 1em 0;
+    white-space: nowrap;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.tree ul::after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+.tree li {
+    display: inline-block;
+    vertical-align: top;
+    text-align: center;
+    list-style-type: none;
+    position: relative;
+    padding: 1.5em 1em 0 0
+}
+
+.tree li::before,
+.tree li::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 50%;
+    border-top: 1px solid #ccc;
+    width: 50%;
+    height: 1em;
+}
+
+.tree li::after {
+    right: auto;
+    left: 50%;
+    border-left: 1px solid #ccc;
+}
+
+.tree li:only-child::after,
+.tree li:only-child::before {
+    display: none;
+}
+
+.tree li:only-child {
+    padding-top: 0;
+}
+
+.tree li:first-child::before,
+.tree li:last-child::after {
+    border: 0 none;
+}
+
+.tree li:last-child::before {
+    border-right: 1px solid #ccc;
+    border-radius: 0 5px 0 0;
+}
+
+.tree li:first-child::after {
+    border-radius: 5px 0 0 0;
+}
+
+.tree ul ul::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 50%;
+    border-left: 1px solid #ccc;
+    width: 0;
+    height: 1em;
+}
+
+.tree li a {
+    border: 1px solid #ccc;
+    padding: 0.5% 0.75%;
+    text-decoration: none;
+    display: inline-block;
+    border-radius: 5px;
+    color: #333;
+    position: relative;
+    top: 1px;
+}
+
+/*
+.tree li a:hover,
+.tree li a:hover+ul li a {
+    background: #e9453f;
+    color: #fff;
+    border: 1px solid #e9453f;
+}
+
+.tree li a:hover+ul li::after,
+.tree li a:hover+ul li::before,
+.tree li a:hover+ul::before,
+.tree li a:hover+ul ul::before {
+    border-color: #e9453f;
+}
+*/

@@ -1,0 +1,81 @@
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <script src="main.js"></script>
+  </head>
+  <body>
+    <h1>ORAM visualizer</h1>
+    <ul class="flex-container horizontal-container">
+      <li class="panel">
+        <div>
+          <a>Algorithm View</a>
+          <select class="pull-right" id="algorithm-selector">
+            <option value="none">None</option>
+            <option value="trivial">Trivial ORAM</option>
+            <option value="binary_tree">Binary Tree ORAM</option>
+            <option value="custom">Custom...</option>
+          </select>
+        </div>
+        <textarea id="editor" disabled></textarea>
+      </li>
+      <li class="panel">
+        <a>Tree View</a>
+        <div class="tree disabled" id="tree">
+        </div>
+      </li>
+      <li class="panel" id="memory-panel">
+        <a>Memory View</a>
+        <input class="input-small small-text pull-right" id="memory-size" type="number" min="32" max="4096" step="32" value="32">
+        <div class="bucket" id="memory">
+        </div>
+        <div id="statistics">
+          <table>
+            <tr>
+              <td>Reads</td>
+              <td class="align-right"><a id="total-reads">0</a></td>
+            </tr>
+            <tr>
+              <td></td>
+              <td class="align-right"><a id="percent-reads">0</a>%</td>
+            </tr>
+            <tr>
+              <td>Writes</td>
+              <td class="align-right"><a id="total-writes">0</a></td>
+            </tr>
+            <tr>
+              <td></td>
+              <td class="align-right"><a id="percent-writes">0</a>%</td>
+            </tr>
+            <tr>
+              <td>Total</td>
+              <td class="align-right" id="statistics-total"><a id="total-accesses">0</a></td>
+            </tr>
+          </table>
+        </div>
+        <input type="checkbox" id="hide-memory-checkbox">
+        <label for="hide-memory-checkbox">Hide memory contents</label>
+      </li>
+    </ul>
+    <li class="panel" id="simulation-panel">
+      Test:
+      <select id="testcase-selector">
+        <option value="add_retrieve">Add/retrieve integers</option>
+        <option value="sum">Sum of 8 integers</option>
+        <option value="sort">Sort 16 integers</option>
+        <option value="custom">Custom...</option>
+      </select>
+      <button type="button" id="run-button">Run</button>
+      <a id="status"></a>
+      <div class="pull-right" id="speed-slider-container">
+        <a>Speed:</a>
+        <input type="range" min="1" max="100" value="50" class="slider" id="speed-slider">
+      </div>
+    </li>
+    <iframe class = "hidden" id='algorithm-frame' src='worker.html'></iframe>
+    <iframe class = "hidden" id='test-frame' src='worker.html'></iframe>
+    <footer>
+      Created by Olav Sortland Thoresen as preparation for master's thesis at <a href="https://ntnu.edu">NTNU</a>.
+    </footer>
+  </body>
+</html>
