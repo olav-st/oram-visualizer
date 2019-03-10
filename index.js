@@ -1,7 +1,9 @@
 import MemoryElement from './elements/memory';
+import MemoryViewElement from './elements/memory_view';
 import BinaryTreeElement from './elements/binary_tree';
 import NullORAM from './algorithms/null_oram';
 import TrivialORAM from './algorithms/trivial_oram';
+import SquareRootORAM from './algorithms/square_root_oram';
 import BinaryTreeORAM from './algorithms/binary_tree_oram';
 import NullTest from './tests/null_test';
 import SimpleAddRetrieveTest from './tests/simple_add_retrieve';
@@ -10,8 +12,10 @@ import Sum8Test from './tests/sum_8';
 
 const DEFAULT_MEMORY_SIZE = 32;
 
-let tree = undefined;
-let memory = undefined;
+let memory = null;
+let permuted = null;
+let shelter = null;
+let tree = null;
 let speed = 0.5;
 
 function sleep(ms) 
@@ -41,15 +45,23 @@ function onAlgorithmSelectorChanged(event)
     {
         case "none":
             editor.value = NullORAM;
+            setLogicalView(null);
             break;
         case "trivial":
             editor.value = TrivialORAM;
+            setLogicalView(null);
             break;
-        case "binary_tree":
+        case "square-root":
+            editor.value = SquareRootORAM;
+            setLogicalView('square-root');
+            break;
+        case "binary-tree":
             editor.value = BinaryTreeORAM;
+            setLogicalView('tree');
             break;
         default:
             editor.value = NullORAM;
+            setLogicalView(null);
             break;
     }
     if(event.target.value == "custom")
@@ -126,6 +138,34 @@ function updateStatistics(memory)
     document.getElementById('total-accesses').innerHTML = totalAccesses;
 }
 
+function setLogicalView(view)
+{
+    if(view == "tree")
+    {
+        document.getElementById('tree').classList.remove("disabled");
+    }
+    else
+    {
+        document.getElementById('tree').classList.add("disabled");
+    }
+    if(view == "square-root")
+    {
+        document.getElementById('square-root').classList.remove("disabled");
+    }
+    else
+    {
+        document.getElementById('square-root').classList.add("disabled");   
+    }
+    if(view == null || view == "none")
+    {
+        document.getElementById('none').classList.remove("disabled");
+    }
+    else
+    {
+        document.getElementById('none').classList.add("disabled");   
+    }
+}
+
 async function runSimulation(event)
 {
     memory.showTags = false;
@@ -175,10 +215,14 @@ function main()
 {
     //Init memory and tree
     memory = new MemoryElement('memory', new Array(DEFAULT_MEMORY_SIZE), false);
+    permuted = new MemoryViewElement('permuted', memory, 0, memory.size / 2 + Math.sqrt(memory.size / 2));
+    shelter = new MemoryViewElement('shelter', memory, permuted.length, Math.sqrt(memory.size / 2));
     tree = new BinaryTreeElement('graph', memory, 4);
     //Enable access from iframes
     let algorithmFrame = document.getElementById('algorithm-frame');
     algorithmFrame.contentWindow.memory = memory;
+    algorithmFrame.contentWindow.permuted = permuted;
+    algorithmFrame.contentWindow.shelter = shelter;
     algorithmFrame.contentWindow.tree = tree;
     algorithmFrame.contentWindow.speed = speed;
     algorithmFrame.contentWindow.sleep = sleep;

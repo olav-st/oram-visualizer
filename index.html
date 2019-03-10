@@ -13,16 +13,31 @@
           <select class="pull-right" id="algorithm-selector">
             <option value="none">None</option>
             <option value="trivial">Trivial ORAM</option>
-            <option value="binary_tree">Binary Tree ORAM</option>
+            <option value="square-root">Square Root ORAM</option>
+            <option value="binary-tree">Binary Tree ORAM</option>
             <option value="custom">Custom...</option>
           </select>
         </div>
         <textarea id="editor" disabled></textarea>
       </li>
-      <li class="panel">
-        <a>Tree View</a>
-        <div class="tree disabled" id="tree">
+      <li class="panel" id="logical-panel">
+        <a>Logical View</a>
+        <div class="logical-view tree disabled" id="tree"></div>
+        <div class="logical-view disabled" id="square-root">
+          <div>
+            <span>
+              <p>Permuted</p>
+            </span>
+            <div class="bucket" id="permuted"></div>
+          </div>
+          <div>
+            <span>
+              <p>Shelter</p>
+            </span>
+            <div class="bucket" id="shelter"></div>
+          </div>
         </div>
+        <div class="logical-view" id="none">Not used by this algorithm.</div>
       </li>
       <li class="panel" id="memory-panel">
         <a>Memory View</a>
